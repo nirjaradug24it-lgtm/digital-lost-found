@@ -1,0 +1,2571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Lost & Found</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: #0f172a;
+
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        nav .links {
+            display: flex;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #60a5fa;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 520px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 70px 8%;
+
+            background:
+                radial-gradient(circle at top left,
+                #dbeafe,
+                transparent 35%),
+
+                radial-gradient(circle at bottom right,
+                #dcfce7,
+                transparent 35%),
+
+                #f8fafc;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+
+            background: #dbeafe;
+            color: #1d4ed8;
+
+            padding: 8px 16px;
+
+            border-radius: 50px;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 6vw, 65px);
+            line-height: 1.05;
+
+            margin-bottom: 20px;
+
+            color: #0f172a;
+        }
+
+        .hero h1 span {
+            color: #2563eb;
+        }
+
+        .hero p {
+            color: #64748b;
+
+            font-size: 18px;
+            line-height: 1.7;
+
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .hero-btn {
+            padding: 14px 24px;
+
+            border: none;
+            border-radius: 10px;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .lost-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        .found-btn {
+            background: #22c55e;
+            color: white;
+        }
+
+        .browse-btn {
+            background: white;
+            color: #2563eb;
+            border: 1px solid #bfdbfe;
+        }
+
+        /* ================= GENERAL ================= */
+
+        .section {
+            padding: 80px 7%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 34px;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: #64748b;
+        }
+
+        /* ================= DASHBOARD ================= */
+
+        .dashboard {
+            background: white;
+        }
+
+        .dashboard-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(210px, 1fr));
+
+            gap: 22px;
+        }
+
+        .stat-card {
+            background: white;
+
+            padding: 28px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 8px 30px rgba(15,23,42,0.08);
+
+            border: 1px solid #e2e8f0;
+
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            font-size: 25px;
+
+            margin-bottom: 18px;
+        }
+
+        .blue-icon {
+            background: #dbeafe;
+        }
+
+        .red-icon {
+            background: #fee2e2;
+        }
+
+        .green-icon {
+            background: #dcfce7;
+        }
+
+        .purple-icon {
+            background: #ede9fe;
+        }
+
+        .stat-card h3 {
+            font-size: 34px;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #64748b;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-section {
+            background: #f1f5f9;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: auto;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 35px rgba(15,23,42,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            margin-bottom: 7px;
+
+            color: #334155;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37,99,235,0.1);
+        }
+
+        .submit-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* ================= ITEMS ================= */
+
+        .items-section {
+            background: white;
+        }
+
+        .items-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 22px;
+        }
+
+        .item-card {
+
+            background: white;
+
+            padding: 24px;
+
+            border-radius: 16px;
+
+            border: 1px solid #e2e8f0;
+
+            box-shadow:
+                0 6px 22px rgba(15,23,42,0.06);
+
+            transition: 0.3s;
+
+            border-top: 5px solid #2563eb;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .lost-card {
+            border-top-color: #ef4444;
+        }
+
+        .found-card {
+            border-top-color: #22c55e;
+        }
+
+        .item-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .item-icon {
+            font-size: 30px;
+        }
+
+        .status-badge {
+
+            padding: 5px 10px;
+
+            border-radius: 50px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .lost-badge {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .found-badge {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .pending-badge {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .approved-badge {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .rejected-badge {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .item-card h3 {
+
+            font-size: 20px;
+
+            margin-bottom: 14px;
+
+            color: #0f172a;
+        }
+
+        .item-detail {
+
+            margin: 9px 0;
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+        .item-detail strong {
+            color: #334155;
+        }
+
+        .claim-btn {
+
+            width: 100%;
+
+            padding: 11px;
+
+            margin-top: 15px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #7c3aed;
+
+            color: white;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .claim-btn:hover {
+            background: #6d28d9;
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-section {
+            background: #f1f5f9;
+        }
+
+        .search-container {
+
+            max-width: 900px;
+
+            margin: auto;
+        }
+
+        .search-box {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+        .search-box input {
+
+            flex: 1;
+
+            padding: 14px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            outline: none;
+
+            font-size: 15px;
+        }
+
+        .search-box button {
+
+            padding: 14px 25px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        /* ================= CLAIM LIST ================= */
+
+        .claims-section {
+            background: white;
+        }
+
+        .claims-toolbar {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            margin-bottom: 25px;
+        }
+
+        .refresh-btn {
+
+            padding: 11px 18px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #0f172a;
+
+            color: white;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .refresh-btn:hover {
+            background: #1e293b;
+        }
+
+        .claims-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(300px, 1fr));
+
+            gap: 22px;
+        }
+
+        .claim-card {
+
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 16px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 6px 22px rgba(15,23,42,0.06);
+
+            border-left: 5px solid #f59e0b;
+        }
+
+        .claim-card.approved {
+            border-left-color: #22c55e;
+        }
+
+        .claim-card.rejected {
+            border-left-color: #ef4444;
+        }
+
+        .claim-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .claim-id {
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            color: #0f172a;
+        }
+
+        .claim-detail {
+
+            margin: 10px 0;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        .claim-detail strong {
+            color: #334155;
+        }
+
+        .claim-actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+        .approve-btn,
+        .reject-btn {
+
+            flex: 1;
+
+            padding: 10px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            color: white;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .approve-btn {
+            background: #22c55e;
+        }
+
+        .approve-btn:hover {
+            background: #16a34a;
+        }
+
+        .reject-btn {
+            background: #ef4444;
+        }
+
+        .reject-btn:hover {
+            background: #dc2626;
+        }
+
+        /* ================= MESSAGES ================= */
+
+        .success {
+
+            margin-top: 15px;
+
+            padding: 13px;
+
+            border-radius: 8px;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            text-align: center;
+
+            font-weight: 600;
+        }
+
+        .error {
+
+            margin-top: 15px;
+
+            padding: 13px;
+
+            border-radius: 8px;
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            text-align: center;
+
+            font-weight: 600;
+        }
+
+        .empty-message {
+
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #64748b;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            background: #0f172a;
+
+            color: #cbd5e1;
+
+            padding: 35px 7%;
+
+            text-align: center;
+        }
+
+        footer h3 {
+
+            color: white;
+
+            margin-bottom: 8px;
+        }
+
+        footer p {
+            font-size: 13px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 800px) {
+
+            nav {
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+            nav .links {
+
+                justify-content: center;
+
+                gap: 12px;
+            }
+
+            .section {
+                padding: 60px 5%;
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .form-container {
+                padding: 25px;
+            }
+
+            .claim-actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================================================= -->
+<!-- NAVBAR -->
+<!-- ================================================= -->
+
+<nav>
+
+    <div class="logo">
+
+        🔎 Digital
+        <span>Lost & Found</span>
+
+    </div>
+
+    <div class="links">
+
+        <a href="#">
+            Home
+        </a>
+
+        <a href="#dashboard">
+            Dashboard
+        </a>
+
+        <a href="#report">
+            Report
+        </a>
+
+        <a href="#lostItemsSection">
+            Lost
+        </a>
+
+        <a href="#foundItemsSection">
+            Found
+        </a>
+
+        <a href="#claimsSection">
+            Claims
+        </a>
+
+        <a href="#search">
+            Search
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================================================= -->
+<!-- HERO -->
+<!-- ================================================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            🎓 College Lost & Found System
+        </div>
+
+        <h1>
+
+            Lost something?
+
+            <br>
+
+            <span>Let's find it.</span>
+
+        </h1>
+
+        <p>
+
+            Report lost items, report found items,
+            search for belongings and submit claims
+            — all in one place.
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                class="hero-btn lost-btn"
+                onclick="showForm('LOST')">
+
+                🔴 Report Lost Item
+
+            </button>
+
+            <button
+                class="hero-btn found-btn"
+                onclick="showForm('FOUND')">
+
+                🟢 Report Found Item
+
+            </button>
+
+            <button
+                class="hero-btn browse-btn"
+                onclick="document.getElementById('foundItemsSection').scrollIntoView()">
+
+                👀 Browse Items
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- DASHBOARD -->
+<!-- ================================================= -->
+
+<section
+    class="section dashboard"
+    id="dashboard">
+
+    <div class="section-header">
+
+        <h2>
+            📊 Dashboard
+        </h2>
+
+        <p>
+            Quick overview of the system
+        </p>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon blue-icon">
+                📦
+            </div>
+
+            <h3 id="totalItems">
+                0
+            </h3>
+
+            <p>
+                Total Items
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon red-icon">
+                🔴
+            </div>
+
+            <h3 id="lostItems">
+                0
+            </h3>
+
+            <p>
+                Lost Items
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon green-icon">
+                🟢
+            </div>
+
+            <h3 id="foundItems">
+                0
+            </h3>
+
+            <p>
+                Found Items
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple-icon">
+                📝
+            </div>
+
+            <h3 id="totalClaims">
+                0
+            </h3>
+
+            <p>
+                Claims
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- REPORT ITEM -->
+<!-- ================================================= -->
+
+<section
+    class="section form-section"
+    id="report">
+
+    <div class="section-header">
+
+        <h2>
+            📢 Report an Item
+        </h2>
+
+        <p>
+            Tell us about the item you lost or found.
+        </p>
+
+    </div>
+
+
+    <div class="form-container">
+
+        <form
+            id="itemForm"
+            onsubmit="submitItem(event)">
+
+            <div class="form-group">
+
+                <label>
+                    Item Title
+                </label>
+
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Example: Black Wallet"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    id="description"
+                    placeholder="Describe the item..."
+                    required></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Category
+                </label>
+
+                <input
+                    type="text"
+                    id="category"
+                    placeholder="Example: Wallet, Phone, ID Card"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Location
+                </label>
+
+                <input
+                    type="text"
+                    id="location"
+                    placeholder="Example: College Library"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="date"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Item Type
+                </label>
+
+                <select id="type">
+
+                    <option value="LOST">
+                        🔴 Lost Item
+                    </option>
+
+                    <option value="FOUND">
+                        🟢 Found Item
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-btn">
+
+                Submit Report
+
+            </button>
+
+
+            <div id="message"></div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- LOST ITEMS -->
+<!-- ================================================= -->
+
+<section
+    class="section items-section"
+    id="lostItemsSection">
+
+    <div class="section-header">
+
+        <h2>
+            🔴 Lost Items
+        </h2>
+
+        <p>
+            Items reported as lost.
+        </p>
+
+    </div>
+
+
+    <div
+        id="lostItemsList"
+        class="items-grid">
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- FOUND ITEMS -->
+<!-- ================================================= -->
+
+<section
+    class="section items-section"
+    id="foundItemsSection">
+
+    <div class="section-header">
+
+        <h2>
+            🟢 Found Items
+        </h2>
+
+        <p>
+            Items reported as found.
+        </p>
+
+    </div>
+
+
+    <div
+        id="foundItemsList"
+        class="items-grid">
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- SEARCH -->
+<!-- ================================================= -->
+
+<section
+    class="section search-section"
+    id="search">
+
+    <div class="section-header">
+
+        <h2>
+            🔍 Search Items
+        </h2>
+
+        <p>
+            Search for an item by title.
+        </p>
+
+    </div>
+
+
+    <div class="search-container">
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchTitle"
+                placeholder="Example: wallet">
+
+            <button
+                onclick="searchItems()">
+
+                🔍 Search
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="searchResults"
+            class="items-grid"
+            style="margin-top:30px;">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- CLAIM FORM -->
+<!-- ================================================= -->
+
+<section
+    class="section form-section"
+    id="claimSection"
+    style="display:none;">
+
+    <div class="section-header">
+
+        <h2>
+            📝 Claim an Item
+        </h2>
+
+        <p>
+            Provide your details and proof of ownership.
+        </p>
+
+    </div>
+
+
+    <div class="form-container">
+
+        <form
+            id="claimForm"
+            onsubmit="submitClaim(event)">
+
+            <input
+                type="hidden"
+                id="claimItemId">
+
+
+            <div class="form-group">
+
+                <label>
+                    Your Name
+                </label>
+
+                <input
+                    type="text"
+                    id="claimantName"
+                    placeholder="Enter your name"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Your Email
+                </label>
+
+                <input
+                    type="email"
+                    id="claimantEmail"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Proof of Ownership
+                </label>
+
+                <textarea
+                    id="proof"
+                    placeholder="Explain how you can prove the item belongs to you..."
+                    required></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-btn">
+
+                📝 Submit Claim
+
+            </button>
+
+
+            <div id="claimMessage"></div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- CLAIM LIST -->
+<!-- ================================================= -->
+
+<section
+    class="section claims-section"
+    id="claimsSection">
+
+    <div class="section-header">
+
+        <h2>
+            📋 Claim List
+        </h2>
+
+        <p>
+            View all claims submitted for reported items.
+        </p>
+
+    </div>
+
+
+    <div class="claims-toolbar">
+
+        <button
+            class="refresh-btn"
+            onclick="loadClaims()">
+
+            🔄 Refresh Claims
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="claimsList"
+        class="claims-grid">
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- FOOTER -->
+<!-- ================================================= -->
+
+<footer>
+
+    <h3>
+        🔎 Digital Lost & Found
+    </h3>
+
+    <p>
+        Making lost items easier to find.
+    </p>
+
+    <br>
+
+    <p>
+        © 2026 Digital Lost & Found System
+    </p>
+
+</footer>
+
+
+<script>
+
+
+// =====================================================
+// DASHBOARD
+// =====================================================
+
+async function loadDashboard() {
+
+    try {
+
+        const response =
+            await fetch("/dashboard");
+
+        if (!response.ok) {
+            throw new Error("Dashboard failed");
+        }
+
+        const data =
+            await response.json();
+
+        document.getElementById("totalItems")
+            .textContent =
+            data.totalItems ?? 0;
+
+        document.getElementById("lostItems")
+            .textContent =
+            data.lostItems ?? 0;
+
+        document.getElementById("foundItems")
+            .textContent =
+            data.foundItems ?? 0;
+
+        document.getElementById("totalClaims")
+            .textContent =
+            data.totalClaims ?? 0;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// LOST ITEMS
+// =====================================================
+
+async function loadLostItems() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/items/search/type?type=LOST"
+            );
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
+        const items =
+            await response.json();
+
+        const container =
+            document.getElementById(
+                "lostItemsList"
+            );
+
+        container.innerHTML = "";
+
+        if (!items || items.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty-message">
+                    🔎 No lost items reported yet.
+                </div>
+            `;
+
+            return;
+        }
+
+        items.forEach(item => {
+
+            container.appendChild(
+                createItemCard(item, "LOST")
+            );
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "lostItemsList"
+        ).innerHTML = `
+            <div class="empty-message">
+                ❌ Unable to load lost items.
+            </div>
+        `;
+
+    }
+
+}
+
+
+// =====================================================
+// FOUND ITEMS
+// =====================================================
+
+async function loadFoundItems() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/items/search/type?type=FOUND"
+            );
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
+        const items =
+            await response.json();
+
+        const container =
+            document.getElementById(
+                "foundItemsList"
+            );
+
+        container.innerHTML = "";
+
+        if (!items || items.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty-message">
+                    🔎 No found items reported yet.
+                </div>
+            `;
+
+            return;
+        }
+
+        items.forEach(item => {
+
+            container.appendChild(
+                createItemCard(item, "FOUND")
+            );
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "foundItemsList"
+        ).innerHTML = `
+            <div class="empty-message">
+                ❌ Unable to load found items.
+            </div>
+        `;
+
+    }
+
+}
+
+
+// =====================================================
+// ITEM CARD
+// =====================================================
+
+function createItemCard(item, type) {
+
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "item-card " +
+        (
+            type === "LOST"
+                ? "lost-card"
+                : "found-card"
+        );
+
+
+    const icon =
+        type === "LOST"
+            ? "🔴"
+            : "🟢";
+
+
+    const badgeClass =
+        type === "LOST"
+            ? "lost-badge"
+            : "found-badge";
+
+
+    card.innerHTML = `
+
+        <div class="item-top">
+
+            <div class="item-icon">
+                ${icon}
+            </div>
+
+            <span
+                class="status-badge ${badgeClass}">
+
+                ${escapeHtml(
+                    item.status || "OPEN"
+                )}
+
+            </span>
+
+        </div>
+
+
+        <h3>
+            ${escapeHtml(
+                item.title || "Untitled Item"
+            )}
+        </h3>
+
+
+        <div class="item-detail">
+
+            <strong>
+                📝 Description:
+            </strong>
+
+            ${escapeHtml(
+                item.description || "N/A"
+            )}
+
+        </div>
+
+
+        <div class="item-detail">
+
+            <strong>
+                🏷 Category:
+            </strong>
+
+            ${escapeHtml(
+                item.category || "N/A"
+            )}
+
+        </div>
+
+
+        <div class="item-detail">
+
+            <strong>
+                📍 Location:
+            </strong>
+
+            ${escapeHtml(
+                item.location || "N/A"
+            )}
+
+        </div>
+
+
+        <div class="item-detail">
+
+            <strong>
+                📅 Date:
+            </strong>
+
+            ${escapeHtml(
+                item.date || "N/A"
+            )}
+
+        </div>
+
+
+        <div class="item-detail">
+
+            <strong>
+                🔢 Item ID:
+            </strong>
+
+            ${item.id ?? "N/A"}
+
+        </div>
+
+
+        <button
+            class="claim-btn"
+            onclick="showClaimForm(${item.id})">
+
+            📝 Claim This Item
+
+        </button>
+
+    `;
+
+    return card;
+
+}
+
+
+// =====================================================
+// ESCAPE HTML
+// =====================================================
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value;
+
+    return div.innerHTML;
+
+}
+
+
+// =====================================================
+// SHOW REPORT FORM
+// =====================================================
+
+function showForm(type) {
+
+    document.getElementById(
+        "type"
+    ).value = type;
+
+
+    document.getElementById(
+        "report"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+// =====================================================
+// SUBMIT ITEM
+// =====================================================
+
+async function submitItem(event) {
+
+    event.preventDefault();
+
+
+    const item = {
+
+        title:
+            document.getElementById(
+                "title"
+            ).value,
+
+        description:
+            document.getElementById(
+                "description"
+            ).value,
+
+        category:
+            document.getElementById(
+                "category"
+            ).value,
+
+        location:
+            document.getElementById(
+                "location"
+            ).value,
+
+        date:
+            document.getElementById(
+                "date"
+            ).value,
+
+        type:
+            document.getElementById(
+                "type"
+            ).value,
+
+        status:
+            "OPEN"
+
+    };
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/items",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(item)
+
+                }
+            );
+
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
+
+        const savedItem =
+            await response.json();
+
+
+        document.getElementById(
+            "message"
+        ).innerHTML = `
+
+            <div class="success">
+
+                ✅ Item reported successfully!
+
+                <br><br>
+
+                Item ID:
+                ${savedItem.id}
+
+            </div>
+
+        `;
+
+
+        document.getElementById(
+            "itemForm"
+        ).reset();
+
+
+        loadDashboard();
+
+        loadLostItems();
+
+        loadFoundItems();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "message"
+        ).innerHTML = `
+
+            <div class="error">
+
+                ❌ Failed to submit item.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// =====================================================
+// SEARCH
+// =====================================================
+
+async function searchItems() {
+
+    const title =
+        document.getElementById(
+            "searchTitle"
+        ).value.trim();
+
+
+    if (!title) {
+
+        document.getElementById(
+            "searchResults"
+        ).innerHTML = `
+
+            <div class="empty-message">
+
+                🔍 Enter an item name first.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/items/search/title?title="
+                +
+                encodeURIComponent(title)
+            );
+
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
+
+        const items =
+            await response.json();
+
+
+        const container =
+            document.getElementById(
+                "searchResults"
+            );
+
+        container.innerHTML = "";
+
+
+        if (!items || items.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-message">
+
+                    🔎 No matching items found.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        items.forEach(item => {
+
+            const type =
+                String(item.type)
+                    .toUpperCase() === "FOUND"
+                    ? "FOUND"
+                    : "LOST";
+
+
+            container.appendChild(
+                createItemCard(
+                    item,
+                    type
+                )
+            );
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "searchResults"
+        ).innerHTML = `
+
+            <div class="empty-message">
+
+                ❌ Search failed.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// =====================================================
+// SHOW CLAIM FORM
+// =====================================================
+
+function showClaimForm(itemId) {
+
+    document.getElementById(
+        "claimItemId"
+    ).value = itemId;
+
+
+    document.getElementById(
+        "claimSection"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "claimSection"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+// =====================================================
+// SUBMIT CLAIM
+// =====================================================
+
+async function submitClaim(event) {
+
+    event.preventDefault();
+
+
+    const claim = {
+
+        itemId:
+            parseInt(
+                document.getElementById(
+                    "claimItemId"
+                ).value
+            ),
+
+        claimantName:
+            document.getElementById(
+                "claimantName"
+            ).value,
+
+        claimantEmail:
+            document.getElementById(
+                "claimantEmail"
+            ).value,
+
+        proof:
+            document.getElementById(
+                "proof"
+            ).value
+
+    };
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/claims",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(claim)
+
+                }
+            );
+
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
+
+        const savedClaim =
+            await response.json();
+
+
+        document.getElementById(
+            "claimMessage"
+        ).innerHTML = `
+
+            <div class="success">
+
+                ✅ Claim submitted successfully!
+
+                <br><br>
+
+                Claim ID:
+                ${savedClaim.id}
+
+                <br>
+
+                Status:
+                ${savedClaim.status}
+
+            </div>
+
+        `;
+
+
+        document.getElementById(
+            "claimForm"
+        ).reset();
+
+
+        loadDashboard();
+
+        loadClaims();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "claimMessage"
+        ).innerHTML = `
+
+            <div class="error">
+
+                ❌ Failed to submit claim.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// =====================================================
+// LOAD CLAIMS
+// =====================================================
+
+async function loadClaims() {
+
+    const container =
+        document.getElementById(
+            "claimsList"
+        );
+
+
+    container.innerHTML = `
+
+        <div class="empty-message">
+
+            ⏳ Loading claims...
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const response =
+            await fetch("/claims");
+
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
+
+        const claims =
+            await response.json();
+
+
+        container.innerHTML = "";
+
+
+        if (!claims || claims.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-message">
+
+                    📋 No claims submitted yet.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        claims.forEach(claim => {
+
+            container.appendChild(
+                createClaimCard(claim)
+            );
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Claims error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="empty-message">
+
+                ❌ Unable to load claims.
+
+                <br><br>
+
+                Make sure your
+                <strong>/claims</strong>
+                endpoint is working.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// =====================================================
+// CREATE CLAIM CARD
+// =====================================================
+
+function createClaimCard(claim) {
+
+    const card =
+        document.createElement("div");
+
+
+    const status =
+        String(
+            claim.status || "PENDING"
+        ).toUpperCase();
+
+
+    if (status === "APPROVED") {
+
+        card.className =
+            "claim-card approved";
+
+    }
+
+    else if (status === "REJECTED") {
+
+        card.className =
+            "claim-card rejected";
+
+    }
+
+    else {
+
+        card.className =
+            "claim-card";
+
+    }
+
+
+    let badgeClass =
+        "pending-badge";
+
+
+    if (status === "APPROVED") {
+        badgeClass =
+            "approved-badge";
+    }
+
+    else if (status === "REJECTED") {
+        badgeClass =
+            "rejected-badge";
+    }
+
+
+    card.innerHTML = `
+
+        <div class="claim-header">
+
+            <div class="claim-id">
+
+                📝 Claim #${claim.id}
+
+            </div>
+
+
+            <span
+                class="status-badge ${badgeClass}">
+
+                ${status}
+
+            </span>
+
+        </div>
+
+
+        <div class="claim-detail">
+
+            <strong>
+                🔢 Item ID:
+            </strong>
+
+            ${claim.itemId ?? "N/A"}
+
+        </div>
+
+
+        <div class="claim-detail">
+
+            <strong>
+                👤 Claimant:
+            </strong>
+
+            ${escapeHtml(
+                claim.claimantName || "N/A"
+            )}
+
+        </div>
+
+
+        <div class="claim-detail">
+
+            <strong>
+                📧 Email:
+            </strong>
+
+            ${escapeHtml(
+                claim.claimantEmail || "N/A"
+            )}
+
+        </div>
+
+
+        <div class="claim-detail">
+
+            <strong>
+                🔐 Proof:
+            </strong>
+
+            ${escapeHtml(
+                claim.proof || "N/A"
+            )}
+
+        </div>
+
+
+        ${
+            status === "PENDING"
+            ?
+
+            `
+
+            <div class="claim-actions">
+
+                <button
+                    class="approve-btn"
+                    onclick="updateClaimStatus(
+                        ${claim.id},
+                        'APPROVED'
+                    )">
+
+                    ✅ Approve
+
+                </button>
+
+
+                <button
+                    class="reject-btn"
+                    onclick="updateClaimStatus(
+                        ${claim.id},
+                        'REJECTED'
+                    )">
+
+                    ❌ Reject
+
+                </button>
+
+            </div>
+
+            `
+
+            :
+
+            ""
+
+        }
+
+    `;
+
+
+    return card;
+
+}
+
+
+// =====================================================
+// UPDATE CLAIM STATUS
+// =====================================================
+
+async function updateClaimStatus(
+    claimId,
+    status
+) {
+
+    const confirmed =
+        confirm(
+            `Are you sure you want to mark Claim #${claimId} as ${status}?`
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/claims/${claimId}/status?status=${status}`,
+                {
+                    method: "PUT"
+                }
+            );
+
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
+
+        alert(
+            `Claim #${claimId} updated to ${status}.`
+        );
+
+
+        loadClaims();
+
+        loadDashboard();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "❌ Failed to update claim status."
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// ENTER KEY SEARCH
+// =====================================================
+
+document.getElementById(
+    "searchTitle"
+).addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+
+            searchItems();
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// INITIAL LOAD
+// =====================================================
+
+loadDashboard();
+
+loadLostItems();
+
+loadFoundItems();
+
+loadClaims();
+
+
+</script>
+
+
+</body>
+
+</html>
